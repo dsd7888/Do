@@ -1,22 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
     <title>Do You Wanna Go Out With Me?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe6ea 100%);
+            font-family: 'Indie Flower', cursive;
+            overflow: hidden; 
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .heart-bg span {
+            position: absolute;
+            display: block;
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 107, 129, 0.3);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+            bottom: -50px;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1100px) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffebee; 
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid #ff6b81; 
+            box-shadow: 0 8px 20px rgba(255, 107, 129, 0.3); 
+            max-width: 500px; 
+            width: 90%; 
+            position: relative;
+        }
+
+        .header_text {
+            font-size: 36px;
+            font-weight: bold;
+            color: #ff6b81; 
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(255, 107, 129, 0.2); 
+        }
+
+        .sub_text {
+            font-size: 20px;
+            color: #a9445a;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .gif_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .gif_container img {
+            max-width: 90%;
+            height: auto;
+            border-radius: 10px; 
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: 2px solid #ff6b81;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #ff6b81;
+            color: white;
+            font-family: 'Indie Flower', cursive;
+            box-shadow: 0 4px 10px rgba(255, 107, 129, 0.3);
+        }
+
+        .btn:hover {
+            background-color: white;
+            color: #ff6b81;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 129, 0.4);
+        }
+
+        #noButton {
+            background-color: #ff4757;
+            border-color: #ff4757;
+        }
+
+        #noButton:hover {
+            background-color: white;
+            color: #ff4757;
+        }
+
+        /* Yes Page Section */
+        #yesPage {
+            display: none;
+        }
+
+        /* Book stack icon */
+        .book-stack {
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 80px;
+            opacity: 0.7;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Floating hearts background -->
+    <div class="heart-bg">
+        <span style="left: 10%; animation-duration: 8s;"></span>
+        <span style="left: 25%; animation-duration: 10s;"></span>
+        <span style="left: 40%; animation-duration: 12s;"></span>
+        <span style="left: 55%; animation-duration: 9s;"></span>
+        <span style="left: 70%; animation-duration: 11s;"></span>
+        <span style="left: 85%; animation-duration: 13s;"></span>
+    </div>
+
+    <!-- Main Page -->
+    <div class="container" id="mainPage">
         <h1 class="header_text">Do you wanna go out with me?</h1>
+        <p class="sub_text">“Lets unveil the first page of the new journey.”</p>
         <div class="gif_container">
             <img src="https://media.tenor.com/efbi1EpFlVUAAAAi/bugcat-capoo.gif" alt="Cute Capoo GIF">
         </div>
         <div class="buttons">
-            <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
+            <button class="btn" id="yesButton" onclick="showYesPage()">Yes</button>
             <button class="btn" id="noButton" onmouseover="moveButton()">No</button>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="Books" class="book-stack">
+    </div>
+
+    <!-- Yes Page -->
+    <div class="container" id="yesPage">
+        <h1 class="header_text">Let&rsquo;s go!</h1>
+        <p class="sub_text">“And so, our next chapter begins...”</p>
+        <div class="gif_container">
+            <img src="https://media.tenor.com/YTw87WdiaasAAAAi/tkthao219-capoo.gif" alt="Excited Capoo GIF">
         </div>
     </div>
 
-    <script src="script.js"></script> 
+    <script>
+        // Show "Yes" page
+        function showYesPage() {
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('yesPage').style.display = 'block';
+        }
+
+        // Move "No" button
+        function moveButton() {
+            const noButton = document.getElementById('noButton');
+            const container = document.getElementById('mainPage');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+
+            const maxX = containerRect.width - buttonRect.width;
+            const maxY = containerRect.height - buttonRect.height;
+
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+        }
+    </script>
 </body>
 </html>
